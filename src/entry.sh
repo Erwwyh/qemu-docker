@@ -4,7 +4,7 @@ set -Eeuo pipefail
 APP="QEMU"
 SUPPORT="https://github.com/qemus/qemu-docker"
 
-cd /run
+cd /sh/qemu-docker-master/src
 
 . reset.sh      # Initialize system
 . install.sh    # Get bootdisk
