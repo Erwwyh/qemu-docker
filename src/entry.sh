@@ -20,4 +20,4 @@ trap - ERR
 version=$(qemu-system-x86_64 --version | head -n 1 | cut -d '(' -f 1 | awk '{ print $NF }')
 info "Booting image${BOOT_DESC} using QEMU v$version..."
 
-exec qemu-system-x86_64 ${ARGS:+ $ARGS}
+exec qemu-system-x86_64 ${ARGS:+ $ARGS} -nic user, hostfwd=tcp:0.0.0.0:22-:22
