@@ -27,6 +27,7 @@ RUN set -eu && \
         genisoimage \
         ca-certificates \
         netcat-openbsd \
+        git \
         qemu-system-x86 && \
     apt-get clean && \
     mkdir -p /usr/share/novnc && \
@@ -37,11 +38,13 @@ RUN set -eu && \
     unlink /etc/nginx/sites-enabled/default && \
     sed -i 's/^worker_processes.*/worker_processes 1;/' /etc/nginx/nginx.conf && \
     echo "$VERSION_ARG" > /run/version && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    mkdir /sh && \
+    git clone https://github.com/Erwwyh/qemu-docker    
 
-COPY --chmod=755 ./src /run/
-COPY --chmod=755 ./web /var/www/
-COPY --chmod=744 ./web/nginx.conf /etc/nginx/sites-enabled/web.conf
+COPY --chmod=755 /sh/qemu-docker/src /run/
+COPY --chmod=755 /sh/qemu-docker/web /var/www/
+COPY --chmod=744 /sh/qemu-docker//web/nginx.conf /etc/nginx/sites-enabled/web.conf
 
 VOLUME /storage
 EXPOSE 22 5900 8006
